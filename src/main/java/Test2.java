@@ -32,7 +32,6 @@ public class Test2 extends AbstractTest {
         return new Thread(() -> {
             //put(val.getAndSet(!val.get())?1:2);
 
-
 //            if(val.compareAndSet(false,true))
 //                put(1);
 //            else {
@@ -40,14 +39,12 @@ public class Test2 extends AbstractTest {
 //                val.set(false);
 //            }
 
-
             if(!val.getAndSet(true)){
                 put(1);
             } else {
                 put(2);
                 val.set(false);
             }
-
         });
     }
 

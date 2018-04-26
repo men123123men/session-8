@@ -38,7 +38,6 @@ public class Test3 extends AbstractTest {
 
     private static Thread th() {
         return new Thread(() -> {
-
             if(val.compareAndSet(false, true))
                 put(1);
             else {
@@ -50,6 +49,10 @@ public class Test3 extends AbstractTest {
                     val2.set(false);
                 }
             }
+
+            // Можно вообще тупо, вот, так
+//            put((int) (Thread.currentThread().getId()%3)+1);
+
         });
     }
 }
