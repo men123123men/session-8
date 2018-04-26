@@ -3,6 +3,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Test3 extends AbstractTest {
     private static volatile AtomicBoolean val = new AtomicBoolean();
+    private static final AtomicBoolean val2 = new AtomicBoolean();
+
 
     public static void main(String... args) throws InterruptedException {
         for (int i = 0; i < 10_000; i++) {
@@ -36,9 +38,18 @@ public class Test3 extends AbstractTest {
 
     private static Thread th() {
         return new Thread(() -> {
-            // Правки можно внисить от этой линии
 
-            // До этой
+            if(val.compareAndSet(false, true))
+                put(1);
+            else {
+                if (val2.compareAndSet(false, true))
+                    put(2);
+                else {
+                    put(3);
+                    val.set(false);
+                    val2.set(false);
+                }
+            }
         });
     }
 }
