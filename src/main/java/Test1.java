@@ -36,7 +36,7 @@ public class Test1 extends AbstractTest {
     private static Thread th() {
         return new Thread(() -> {
             // Правки можно внисить от этой линии
-
+            put(val.updateAndGet(i->i==3?1:i+1));
             // До этой
         });
     }

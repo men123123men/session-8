@@ -4,7 +4,7 @@ abstract class AbstractTest {
     private static final ConcurrentHashMap<Integer, Thread> map = new ConcurrentHashMap<>();
 
     static void put(int idx) {
-        //System.out.println(idx);
+        System.out.println(idx);
         map.put(idx, Thread.currentThread());
     }
 

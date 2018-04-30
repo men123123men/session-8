@@ -38,21 +38,26 @@ public class Test3 extends AbstractTest {
 
     private static Thread th() {
         return new Thread(() -> {
-            if(val.compareAndSet(false, true))
-                put(1);
-            else {
-                if (val2.compareAndSet(false, true))
-                    put(2);
-                else {
-                    put(3);
-                    val.set(false);
-                    val2.set(false);
-                }
-            }
+            // мютехс на атомике
+            while (!val.compareAndSet(false, true)) ;
+            put(containsKey(2) ? 3 : containsKey(1) ? 2 : 1);
+            val.set(false);
+
+            // решение с использованием 2ух boolean'ов
+//            if(val.compareAndSet(false, true))
+//                put(1);
+//            else {
+//                if (val2.compareAndSet(false, true))
+//                    put(2);
+//                else {
+//                    put(3);
+//                    val.set(false);
+//                    val2.set(false);
+//                }
+//            }
 
             // Можно вообще тупо, вот, так
 //            put((int) (Thread.currentThread().getId()%3)+1);
-
         });
     }
 }

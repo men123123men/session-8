@@ -30,8 +30,16 @@ public class Test2 extends AbstractTest {
 
     private static Thread th() {
         return new Thread(() -> {
-            //put(val.getAndSet(!val.get())?1:2);
+            // элегантно
+//            put(val.getAndSet(!val.get())?1:2);
 
+            boolean oldValue = val.get();
+            while (!val.compareAndSet(oldValue,!oldValue))
+                oldValue=!oldValue;
+            put(oldValue?1:2);
+
+
+            // решение c compareAndSet
 //            if(val.compareAndSet(false,true))
 //                put(1);
 //            else {
@@ -39,12 +47,15 @@ public class Test2 extends AbstractTest {
 //                val.set(false);
 //            }
 
-            if(!val.getAndSet(true)){
-                put(1);
-            } else {
-                put(2);
-                val.set(false);
-            }
+            // решение c getAndSet
+//            if(!val.getAndSet(true)){
+//                put(1);
+//            } else {
+//                put(2);
+//                val.set(false);
+//            }
+
+
         });
     }
 
